@@ -471,3 +471,33 @@ class TrashPage extends StatelessWidget {
     }));
   }
 }
+        Padding(padding: EdgeInsets.all(8), child: TextField(decoration: InputDecoration(labelText: 'নাম / মোবাইল / bKash / TX সার্চ', prefixIcon: Icon(Icons.search), border: OutlineInputBorder()), onChanged: (v){ search=v; applyFilter(); })),
+        Expanded(child: ListView.builder(itemCount: filtered.length, itemBuilder: (ctx,i){
+          final p = filtered[i];
+          final isDup = p.bkashTx.isNotEmpty && allPatients.where((e)=> e.bkashTx==p.bkashTx).length>1;
+          return Card(color: p.isBlocked?Colors.red.shade100: p.okReplied?Colors.green.shade50: null, child: ListTile(
+            leading: CircleAvatar(child: Text('${p.sl}')),
+            title: Text('${p.name} ${p.age.isNotEmpty?'(${p.age})':''} ${p.type} ${isDup?'⚠️ DUP':''}', style: TextStyle(fontWeight: FontWeight.bold)),
+            subtitle: Text('${p.mobile} | ${p.bkashNo} | ${p.bkashTx} ${p.comment.isNotEmpty?'\n💬 ${p.comment}':''} ${p.isBlocked?'\n⛔ ${p.blockReason}':''}'),
+            trailing: p.okReplied?Icon(Icons.check_circle, color: Colors.green):null,
+            onTap: ()=> showPatientOptions(p),
+          ));
+        }))
+      ]),
+    );
+  }
+}
+
+class TrashPage extends StatelessWidget {
+  final List<Patient> allPatients;
+  final VoidCallback onRestore;
+  const TrashPage({super.key, required this.allPatients, required this.onRestore});
+  @override
+  Widget build(BuildContext context) {
+    final trashed = allPatients.where((p)=> p.isTrashed).toList();
+    return Scaffold(appBar: AppBar(title: Text('Trash')), body: ListView.builder(itemCount: trashed.length, itemBuilder: (_,i){
+      final p = trashed[i];
+      return ListTile(title: Text(p.name), subtitle: Text(p.mobile), trailing: IconButton(icon: Icon(Icons.restore), onPressed: (){ p.isTrashed=false; onRestore(); Navigator.pop(context); }));
+    }));
+  }
+}
