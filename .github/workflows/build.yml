@@ -5,11 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - run: cp lib/main.dart /tmp/main.dart && cp pubspec.yaml /tmp/pubspec.yaml
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.22.0'
           channel: 'stable'
       - run: flutter create . --platforms=android --project-name dr_rakhi_app
+      - run: mv /tmp/main.dart lib/main.dart && mv /tmp/pubspec.yaml pubspec.yaml
       - run: flutter pub get
       - run: flutter build apk --release
       - uses: actions/upload-artifact@v4
