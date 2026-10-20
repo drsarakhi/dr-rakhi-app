@@ -1,7 +1,7 @@
-name: dr_s_rakhi_admin_app
-description: Dr Shahida Akter Rakhi Admin - Offline First
+name: dr_rakhi_app
+description: Dr.S.Rakhi Admin App - Offline First
 publish_to: 'none'
-version: 1.0.0+1
+version: 2.0.0+2
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -9,17 +9,19 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  google_mlkit_text_recognition: ^0.13.1
+  image_picker: ^1.0.7
+  file_picker: ^8.0.6
+  share_plus: ^7.2.2
+  pdf: ^3.10.8
+  path_provider: ^2.1.2
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  google_mlkit_text_recognition: ^0.13.1
-  file_picker: ^8.0.6
-  image_picker: ^1.0.7
-  path_provider: ^2.1.2
-  share_plus: ^7.2.2
-  pdf: ^3.10.7
-  printing: ^5.11.1
-  url_launcher: ^6.2.5
-  workmanager: ^0.5.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
 
 flutter:
   uses-material-design: true
